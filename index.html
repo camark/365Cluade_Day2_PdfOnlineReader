@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF 朗读器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 PDF 朗读器</h1>
+            <p class="subtitle">上传PDF文件，自动朗读内容</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p class="upload-text">点击或拖拽PDF文件到这里</p>
+                <p class="upload-hint">支持 .pdf 格式</p>
+                <input type="file" id="fileInput" accept=".pdf" hidden>
+            </div>
+        </div>
+
+        <div class="content-section" id="contentSection" style="display: none;">
+            <div class="main-layout">
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <h3>📑 目录</h3>
+                        <button id="toggleSidebar" class="toggle-btn" title="折叠/展开">◀</button>
+                    </div>
+                    <div id="outlineTree" class="outline-tree">
+                        <p class="no-outline">此PDF没有目录</p>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <button id="showSidebarBtn" class="show-sidebar-btn" style="display: none;">▶ 目录</button>
+                    <div class="file-info">
+                        <h3 id="fileName">文件名</h3>
+                        <p id="pageCount">页数: 0</p>
+                    </div>
+
+                    <div class="text-preview">
+                        <h3>文本预览</h3>
+                        <div id="textPreview" class="preview-content"></div>
+                    </div>
+
+                    <div class="controls">
+                <div class="control-group">
+                    <label for="voiceSelect">选择语音:</label>
+                    <select id="voiceSelect"></select>
+                </div>
+
+                <div class="control-group">
+                    <label for="rateRange">语速:</label>
+                    <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1">
+                    <span id="rateValue">1.0x</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="pitchRange">音调:</label>
+                    <input type="range" id="pitchRange" min="0.5" max="2" step="0.1" value="1">
+                    <span id="pitchValue">1.0</span>
+                </div>
+
+                <div class="button-group">
+                    <button id="rewindBtn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">⏪</span> 后退
+                    </button>
+                    <button id="playBtn" class="btn btn-primary">
+                        <span class="btn-icon">▶</span> 播放
+                    </button>
+                    <button id="pauseBtn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">⏸</span> 暂停
+                    </button>
+                    <button id="stopBtn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">⏹</span> 停止
+                    </button>
+                    <button id="forwardBtn" class="btn btn-secondary" disabled>
+                        <span class="btn-icon">⏩</span> 前进
+                    </button>
+                </div>
+
+                <div class="progress-section">
+                    <div class="progress-info">
+                        <span id="currentSection">准备就绪</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressBar" class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>正在处理PDF...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
